@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Secret BFF Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #fff5f5; scroll-behavior: smooth; }
+        .handwritten { font-family: 'Caveat', cursive; }
+        .polaroid {
+            background: white;
+            padding: 1rem 1rem 3rem 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+        .polaroid:hover { transform: rotate(0deg) scale(1.05); }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <section class="min-h-screen flex flex-col items-center justify-center text-center p-6">
+        <div class="polaroid mb-8">
+           
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold text-pink-600 mb-4">Yo, Bestie! 👋</h1>
+        <p class="text-lg text-gray-700 max-w-md">I made this because a regular text message just wasn't enough for someone as iconic as you.. Scroll down...</p>
+        <div class="mt-10 animate-bounce text-pink-400">↓</div>
+    </section>
+
+    <section class="py-20 px-6 bg-white shadow-inner">
+        <h2 class="handwritten text-5xl text-center text-pink-500 mb-10">Why you're the GOAT:</h2>
+        <div class="max-w-xl mx-auto space-y-6">
+            <div class="p-5 bg-pink-50 rounded-xl border-l-8 border-pink-400 text-xl italic text-gray-800">"You're the only person I'd share my secrets."</div>
+            <div class="p-5 bg-pink-50 rounded-xl border-l-8 border-pink-400 text-xl italic text-gray-800">"you Always down for the 2:00 AM chaos."</div>
+            <div class="p-5 bg-pink-50 rounded-xl border-l-8 border-pink-400 text-xl italic text-gray-800">"You actually listen to my long stories."</div>
+        </div>
+    </section>
+
+    <section id="proposal" class="min-h-screen flex flex-col items-center justify-center p-6 bg-pink-100 relative">
+        <div id="mainContent">
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-12 text-center">So, will you be my <br><span class="text-pink-600">Best Friend Forever?</span></h2>
+            
+            <div class="flex flex-col md:flex-row gap-12 items-center justify-center w-full min-h-[200px]">
+                <button id="yesBtn" class="z-10 bg-green-500 hover:bg-green-600 text-white font-bold py-5 px-16 rounded-full text-3xl transform transition active:scale-95 shadow-xl">
+                    YES! 💖
+                </button>
+
+                <button id="noBtn" class="bg-gray-400 text-white font-bold py-4 px-10 rounded-full text-xl transition-all duration-75">
+                    No? 😢
+                </button>
+            </div>
+        </div>
+
+        <div id="successMsg" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-pink-100 bg-opacity-95 p-6 text-center">
+            <h3 class="handwritten text-7xl md:text-9xl text-pink-600 animate-pulse drop-shadow-lg">Love you broo! 👊✨</h3>
+            <p class="mt-8 text-2xl text-gray-600 font-semibold">BFF status: OFFICIAL.</p>
+            <button onclick="location.reload()" class="mt-12 text-pink-400 underline italic">Watch it again?</button>
+        </div>
+    </section>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const successMsg = document.getElementById('successMsg');
+
+        // Confetti and "Love You Nakhrebazz Ladki" Logic
+        yesBtn.addEventListener('click', () => {
+            // Throw confetti
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+            const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                confetti({...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                confetti({...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+            }, 250);
+
+            // Show the special text
+            successMsg.classList.remove('hidden');
+        });
+
+        // Runaway Button Logic
+        const moveButton = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+    </script>
+</body>
+</html>
